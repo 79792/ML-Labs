@@ -1,0 +1,3 @@
+model,train_time_ms_median,infer_latency_ms_median,model_size_bytes,model_size_KB,peak_rss_train_MiB,peak_rss_infer_MiB,peak_delta_train_MiB
+LogisticRegression,407.314,0.0193,1055,1.03,265.4,265.4,1.3
+RandomForest,67.47,0.9121,290889,284.07,266.7,266.7,2.6

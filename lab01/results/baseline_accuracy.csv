@@ -1,0 +1,3 @@
+model,test_accuracy
+LogisticRegression,0.9474
+RandomForest,0.9357
