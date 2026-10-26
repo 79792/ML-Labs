@@ -1,0 +1,4 @@
+model,layer,hand_flops
+MLP,Linear 784->256,401408
+CNN,"Conv2d 16->32, 3x3, out 14x14",1806336
+Attention,"1 encoder layer (seq=16, d=64, ff=128)",1114112

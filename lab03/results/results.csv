@@ -1,0 +1,4 @@
+model,params,hand_flops,thop_flops,latency_b1_ms,latency_b128_ms,test_acc,thop_over_hand,latency_per_img_b128_ms
+MLP,235146,469504,469504,0.1296,0.611,0.8782,1.0,0.0048
+CNN,20490,2063488,2063488,0.4094,11.378,0.8952,1.0,0.0889
+Attention,70794,2329856,101632,1.0935,13.883,0.8284,0.044,0.1085
