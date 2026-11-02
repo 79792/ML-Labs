@@ -1,0 +1,19 @@
+Downloaded from OpenML and saved raw copy to data\raw\adult_raw.csv
+Ingestion: 48842 rows, 15 columns
+Raw file SHA256: d273d956c28eba72241f69dcbb78e37e93862248503a1873fb44b9fc2a6ae00b
+Validation: 36 checks, 4 with violations
+  missing ('?' or NaN)     workclass        2799
+  missing ('?' or NaN)     occupation       2809
+  missing ('?' or NaN)     native-country   857
+  exact duplicate rows     all              52
+Duplicate-conflict audit: 5 feature groups, 10 rows with conflicting income labels
+50-row manual audit flags: {'flag_age_range': 0, 'flag_hours_range': 0, 'flag_gain_and_loss': 0, 'flag_husband_female': 0, 'flag_wife_male': 0, 'flag_edu_mismatch': 0, 'flag_missing': 3}
+Split 70/30 stratified: train 34189, test 14653
+Dropped 24 exact duplicates from train (test untouched); train now 34165
+
+LogisticRegression baseline on test:
+                        features  accuracy     f1  n_features
+                     14 original    0.8540 0.6601         105
+14 + capital_net + hours_per_age    0.8578 0.6696         107
+
+Processed dataset SHA256: 20c3eba1d3a53bfa06ab2f1d34edc0a1ab66ee155416dd73d2d9c8f40712f348

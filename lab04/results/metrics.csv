@@ -1,0 +1,3 @@
+features,accuracy,f1,n_features
+14 original,0.854,0.6601,105
+14 + capital_net + hours_per_age,0.8578,0.6696,107

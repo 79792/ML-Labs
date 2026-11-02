@@ -1,0 +1,28 @@
+dataset:
+  source: "openml"
+  name: "adult"
+  version: 2
+seed: 42
+split:
+  test_size: 0.3
+  stratify: "income"
+null_policy: "'?' and NaN are missing"
+impute:
+  numeric: "median"
+  categorical: "most_frequent"
+clip_percentiles:
+  - 1
+  - 99
+dedup: "exact duplicates dropped from train only"
+derived_features:
+  - "capital_net = capital-gain - capital-loss"
+  - "hours_per_age = hours-per-week / (age - 16)"
+model: "LogisticRegression(max_iter=1000)"
+positive_label: ">50K"
+hashes:
+  raw_sha256: "d273d956c28eba72241f69dcbb78e37e93862248503a1873fb44b9fc2a6ae00b"
+  processed_sha256: "20c3eba1d3a53bfa06ab2f1d34edc0a1ab66ee155416dd73d2d9c8f40712f348"
+environment:
+  python: "3.11.9"
+  sklearn: "1.5.0"
+  pandas: "2.2.2"
