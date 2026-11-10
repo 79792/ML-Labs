@@ -1,0 +1,56 @@
+torch 2.3.1+cpu, threads 6
+=== 4. Gradient check: ((a*b + c)**2).relu().sum() ===
+Forward: engine 6.4580512298, pytorch 6.4580512298
+Max |engine - pytorch|   = 0.000e+00
+Max |engine - numerical| = 6.718e-10
+PASS (< 1e-6): True
+param     engine    pytorch  numerical  abs_diff_torch  abs_diff_num
+ a[0] -1.257e+00 -1.257e+00 -1.257e+00       0.000e+00     5.433e-10
+ a[1]  1.649e-01  1.649e-01  1.649e-01       0.000e+00     3.438e-10
+ a[2]  1.083e-01  1.083e-01  1.083e-01       0.000e+00     1.173e-10
+ a[3] -3.735e-02 -3.735e-02 -3.735e-02       0.000e+00     9.522e-11
+ a[4] -3.637e+00 -3.637e+00 -3.637e+00       0.000e+00     3.697e-10
+ b[0]  2.941e-01  2.941e-01  2.941e-01       0.000e+00     1.186e-10
+ b[1] -1.341e+00 -1.341e+00 -1.341e+00       0.000e+00     1.881e-10
+ b[2] -2.571e-01 -2.571e-01 -2.571e-01       0.000e+00     5.641e-10
+ b[3]  2.091e+00  2.091e+00  2.091e+00       0.000e+00     8.329e-11
+ b[4] -8.319e+00 -8.319e+00 -8.319e+00       0.000e+00     2.071e-10
+ c[0]  9.652e-01  9.652e-01  9.652e-01       0.000e+00     1.622e-11
+ c[1]  1.290e+00  1.290e+00  1.290e+00       0.000e+00     2.111e-10
+ c[2] -3.426e-01 -3.426e-01 -3.426e-01       0.000e+00     2.402e-10
+ c[3]  2.223e+00  2.223e+00  2.223e+00       0.000e+00     2.350e-10
+ c[4]  4.264e+00  4.264e+00  4.264e+00       0.000e+00     6.718e-10
+
+=== 5. make_moons, 2 -> 8 -> 1, sigmoid + BCE, full-batch SGD ===
+Engine : final loss 0.2481, train acc 0.870
+PyTorch: final loss 0.2481, train acc 0.870
+Training time (100 epochs, median of 5): engine 25.472 s, pytorch 0.0883 s, pytorch is 289x faster
+
+=== 6. Graph inspection, eager vs compiled, tensor layout ===
+Autograd graph (grad_fn chain from output):
+SumBackward0
+  AddmmBackward0
+    AccumulateGrad
+    ReluBackward0
+      AddmmBackward0
+        AccumulateGrad
+        ReluBackward0
+          AddmmBackward0
+            AccumulateGrad
+            TBackward0
+              AccumulateGrad
+        TBackward0
+    TBackward0
+Input: shape (64, 256), dtype torch.float32, contiguous True, stride (256, 1)
+Linear(256,512).weight: shape (512, 256), dtype torch.float32, contiguous True, stride (256, 1)
+eager                0.6395 ms (median of 200, after warm-up)
+torch.jit.trace      0.6193 ms (median of 200, after warm-up)
+torch.compile        0.6559 ms (median of 200, after warm-up)
+
+Non-contiguous view cost (4096x4096 float32):
+big.t(): contiguous False, stride (1, 4096); .contiguous(): stride (4096, 1)
+x + 1 (contiguous)               8.371 ms
+x + 1 (non-contiguous view)      8.112 ms
+row sum (contiguous)             5.279 ms
+row sum (non-contiguous view)    16.747 ms
+cost of .contiguous() copy       33.916 ms

@@ -1,0 +1,9 @@
+mode,median_ms
+eager,0.6395
+torch.jit.trace,0.6193
+torch.compile,0.6559
+x + 1 (contiguous),8.371
+x + 1 (non-contiguous view),8.112
+row sum (contiguous),5.279
+row sum (non-contiguous view),16.747
+cost of .contiguous() copy,33.916
